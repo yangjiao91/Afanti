@@ -1,0 +1,57 @@
+<style type="text/css">
+
+.applications-container{
+	color: #8470FF;
+	font: 12px;
+}
+</style>
+
+
+<div class="applications-container">
+	<a href="applications-container">applications</a> 
+	<i class="applicationId"> application.id</i>
+</div>
+
+
+<div class="operation">
+<div class="ui icon buttons toolbar">
+    <a href="/#/applications/add" class="ui button mini green">
+        <i class="add icon"></i>
+        Add
+    </a>
+</div>
+
+<div class="ui icon buttons toolbar">
+    <a href="/#/applications/delete" class="ui button mini green">
+        <i class="delete icon"></i>
+        Delete
+    </a>
+</div>
+</div>
+
+
+
+
+<table class="ui sortable table segment" ng-show="applications">
+    <thead>
+        <tr>
+            <th ng-class="sortedTableHeading('id')" ng-click="selectSortColumn('id')">ID</th>
+            <th ng-class="sortedTableHeading('name')" ng-click="selectSortColumn('name')">Name</th>
+            <th ng-class="sortedTableHeading('filename')" ng-click="selectSortColumn('filename')">Filename</th>
+            <th ng-class="sortedTableHeading('owner')" ng-click="selectSortColumn('owner')">Owner</th>
+            <th ng-class="sortedTableHeading('domain')" ng-click="selectSortColumn('domain')">Domain</th>
+            <th ng-class="sortedTableHeading('label')" ng-click="selectSortColumn('label')">Label</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="c in containers | orderBy:orderByField:reverseSort" ng-click="go()" class="rowlink">
+             <td>
+                <a href="/#/application/{{c.id}}">{{c.id|truncate}}</a>
+            </td>
+            <td>{{c.name|container_name}}</td>
+
+        </tr>
+    </tbody>
+</table>
+
