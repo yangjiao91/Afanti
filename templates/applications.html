@@ -1,57 +1,46 @@
-<style type="text/css">
-
-.applications-container{
-	color: #8470FF;
-	font: 12px;
-}
-</style>
-
-
-<div class="applications-container">
-	<a href="applications-container">applications</a> 
-	<i class="applicationId"> application.id</i>
-</div>
-
-
-<div class="operation">
 <div class="ui icon buttons toolbar">
-    <a href="/#/applications/add" class="ui button mini green">
+    <a href="/#/applications/application_deploy" class="ui button mini green">
         <i class="add icon"></i>
-        Add
+        Deploy
     </a>
 </div>
 
 <div class="ui icon buttons toolbar">
-    <a href="/#/applications/delete" class="ui button mini green">
-        <i class="delete icon"></i>
-        Delete
+    <a href="/#/applications/application_details" class="ui button mini green">
+        <i class="add icon"></i>
+        Detail
     </a>
 </div>
+
+<div class="ui icon message" ng-show="applications.length === 0">
+    <i class="info icon"></i>
+    <div class="content">
+        <div class="header">
+            Applications
+        </div>
+        <p>There are no applications deployed.</p>
+    </div>
 </div>
 
-
-
-
-<table class="ui sortable table segment" ng-show="applications">
+<table class="ui sortable table segment" ng-show="containers">
     <thead>
         <tr>
             <th ng-class="sortedTableHeading('id')" ng-click="selectSortColumn('id')">ID</th>
             <th ng-class="sortedTableHeading('name')" ng-click="selectSortColumn('name')">Name</th>
-            <th ng-class="sortedTableHeading('filename')" ng-click="selectSortColumn('filename')">Filename</th>
-            <th ng-class="sortedTableHeading('owner')" ng-click="selectSortColumn('owner')">Owner</th>
-            <th ng-class="sortedTableHeading('domain')" ng-click="selectSortColumn('domain')">Domain</th>
+            <th ng-class="sortedTableHeading('image.name')" ng-click="selectSortColumn('image.name')">Image</th>
+            <th ng-class="sortedTableHeading('engine.id')" ng-click="selectSortColumn('engine.id')">Engine</th>
             <th ng-class="sortedTableHeading('label')" ng-click="selectSortColumn('label')">Label</th>
-
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="c in containers | orderBy:orderByField:reverseSort" ng-click="go()" class="rowlink">
+        <tr ng-repeat="c in applications | orderBy:orderByField:reverseSort" ng-click="go()" class="rowlink">
              <td>
-                <a href="/#/application/{{c.id}}">{{c.id|truncate}}</a>
+                <a href="/#/applications/{{c.id}}">{{c.id|truncate}}</a>
             </td>
-            <td>{{c.name|container_name}}</td>
-
+            <td>{{c.name|application_name}}</td>
+            <td>{{c.image.name}}</td>
+            <td>{{c.engine.id}}</td>
+            <td>{{c.label}}</td>
         </tr>
     </tbody>
 </table>
-

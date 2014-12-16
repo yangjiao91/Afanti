@@ -44,6 +44,6 @@ angular.module('shipyard.services', ['ngResource', 'ngRoute'])
             { 
                 'save': {isArray:true,method:POST},
                 'destroy':{method: 'DELETE'},
-                query: {isArray:true}
-       
+                query: {isArray:true}      
+            });
     })
