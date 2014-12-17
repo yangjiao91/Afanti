@@ -27,9 +27,9 @@
         <tr>
             <th ng-class="sortedTableHeading('id')" ng-click="selectSortColumn('id')">ID</th>
             <th ng-class="sortedTableHeading('name')" ng-click="selectSortColumn('name')">Name</th>
-            <th ng-class="sortedTableHeading('image.name')" ng-click="selectSortColumn('image.name')">Image</th>
-            <th ng-class="sortedTableHeading('engine.id')" ng-click="selectSortColumn('engine.id')">Engine</th>
+            <th ng-class="sortedTableHeading('domain')" ng-click="selectSortColumn('domain')">Domain</th>
             <th ng-class="sortedTableHeading('label')" ng-click="selectSortColumn('label')">Label</th>
+            <th ng-class="sortedTableHeading('examples')" ng-click="selectSortColumn('examples')">Examples</th>
         </tr>
     </thead>
     <tbody>
@@ -38,9 +38,9 @@
                 <a href="/#/applications/{{c.id}}">{{c.id|truncate}}</a>
             </td>
             <td>{{c.name|application_name}}</td>
-            <td>{{c.image.name}}</td>
-            <td>{{c.engine.id}}</td>
+            <td>{{c.domain}}</td>
             <td>{{c.label}}</td>
+            <td>{{c.examples}}</td>
         </tr>
     </tbody>
 </table>

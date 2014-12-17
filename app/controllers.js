@@ -284,9 +284,9 @@ angular.module('shipyard.controllers', ['ngCookies'])
                     restart_policy: restartPolicy, 
                 };
                 if (valid) {
-                    Container.save({count: $scope.count, pull: $scope.pull}, params).$promise.then(function(c){
-                        $location.path("/containers");
-                    }, function(err){
+                    Container.save({count: $scope.count, pull: $scope.pull}, params).$promise.then(
+                        function(c){$location.path("/containers");}, 
+                        function(err){
                         $scope.hideLoader();
                         $scope.error = err.data;
                         return false;
