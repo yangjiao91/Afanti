@@ -591,7 +591,34 @@ angular.module('shipyard.controllers', ['ngCookies'])
         })
 
         .controller('ApplicationsController' , function($scope,$location,Applications){
-            $scope.template = 'templates/applications.html';  
+            $scope.orderByField = 'id';
+            $scope.reverseSort = false;
+
+            $scope.go = function() {
+                $location.path("/applications/" + this.c.id)
+            }
+
+            $scope.selectSortColumn1 = function(field) {
+                $scope.reverseSort = !$scope.reverseSort;
+                $scope.orderByField = field;
+            }
+
+            $scope.sortedTableHeading1 = function(field) {
+                if($scope.orderByField != field) {
+                    return "";
+                } else {
+                    if($scope.reverseSort == true) {
+                        return "descending";
+                    } else {
+                        return "ascending";
+                    }
+                }
+            }
+
+            $scope.template = 'templates/applications.html';
+            Applications.query(function(data){
+                $scope.applications = data;
+            });
         })
 
         .controller('ApplicationDeployController',function($scope,$location,Applications){

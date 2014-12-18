@@ -1,14 +1,7 @@
 <div class="ui icon buttons toolbar">
-    <a href="/#/applications/application_deploy" class="ui button mini green">
+    <a href="/#/applications/deploy" class="ui button mini green">
         <i class="add icon"></i>
         Deploy
-    </a>
-</div>
-
-<div class="ui icon buttons toolbar">
-    <a href="/#/applications/application_details" class="ui button mini green">
-        <i class="add icon"></i>
-        Detail
     </a>
 </div>
 
@@ -22,14 +15,17 @@
     </div>
 </div>
 
-<table class="ui sortable table segment" ng-show="containers">
+<table class="ui sortable table segment" ng-show="applications">
     <thead>
         <tr>
-            <th ng-class="sortedTableHeading('id')" ng-click="selectSortColumn('id')">ID</th>
-            <th ng-class="sortedTableHeading('name')" ng-click="selectSortColumn('name')">Name</th>
-            <th ng-class="sortedTableHeading('domain')" ng-click="selectSortColumn('domain')">Domain</th>
-            <th ng-class="sortedTableHeading('label')" ng-click="selectSortColumn('label')">Label</th>
-            <th ng-class="sortedTableHeading('examples')" ng-click="selectSortColumn('examples')">Examples</th>
+            <th ng-class="sortedTableHeading1('id')" ng-click="selectSortColumn1('id')">ID</th>
+            <th ng-class="sortedTableHeading1('name')" ng-click="selectSortColumn1('name')">Name</th>
+            <th ng-class="sortedTableHeading1('image.name')" ng-click="selectSortColumn1('image.name')">Image</th>
+            <th ng-class="sortedTableHeading1('engine.id')" ng-click="selectSortColumn1('engine.id')">Engine</th>
+            <th ng-class="sortedTableHeading1('image.cpus')" ng-click="selectSortColumn1('image.cpus')">CPUs</th>
+            <th ng-class="sortedTableHeading1('image.memory')" ng-click="selectSortColumn1('image.memory')">Memory</th>
+            <th ng-class="sortedTableHeading1('state')" ng-click="selectSortColumn1('state')">State</th>
+            <th ng-class="sortedTableHeading1('image.type')" ng-click="selectSortColumn1('image.type')">Type</th>
         </tr>
     </thead>
     <tbody>
@@ -37,10 +33,13 @@
              <td>
                 <a href="/#/applications/{{c.id}}">{{c.id|truncate}}</a>
             </td>
-            <td>{{c.name|application_name}}</td>
-            <td>{{c.domain}}</td>
-            <td>{{c.label}}</td>
-            <td>{{c.examples}}</td>
+            <td>{{c.name|container_name}}</td>
+            <td>{{c.image.name}}</td>
+            <td>{{c.engine.id}}</td>
+            <td>{{c.image.cpus}}</td>
+            <td>{{c.image.memory|formatMemory}}</td>
+            <td>{{c.state}}</td>
+            <td>{{c.image.type}}</td>
         </tr>
     </tbody>
 </table>

@@ -39,11 +39,6 @@ angular.module('shipyard.services', ['ngResource', 'ngRoute'])
             query: { isArray: false }
         });
     })
-    .factory('Application', function($resource){
-        return $resource('/api/applications/:id/:action',{id: '@id'},
-            { 
-                'save': {isArray:true,method:POST},
-                'destroy':{method: 'DELETE'},
-                query: {isArray:true}      
-            });
+    .factory('Applications', function($resource) {
+        return $resource('/api/containers');
     })
