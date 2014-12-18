@@ -35,7 +35,7 @@ angular.module('shipyard', [
                 templateUrl: 'templates/application_deploy.html',
                 controller: 'ApplicationDeployController'
             });
-            $routeProvider.when('/applications/application_details', {
+            $routeProvider.when('/applications/:id', {
                 templateUrl: 'templates/application_details.html',
                 controller: 'ApplicationDetailsController'
             });

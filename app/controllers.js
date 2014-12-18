@@ -625,8 +625,8 @@ angular.module('shipyard.controllers', ['ngCookies'])
             $scope.template = 'templates/application_deploy.html';  
         })
 
-        .controller('ApplicationAddController' , function($scope,$location,Applications){
-            $scope.template = 'templates/application_add.html';     
+        .controller('ApplicationDetailsController' , function($scope,$location,Applications){
+            $scope.template = 'templates/application_details.html';     
         })
 
 
