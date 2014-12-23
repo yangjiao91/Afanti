@@ -621,7 +621,7 @@ angular.module('shipyard.controllers', ['ngCookies'])
             });
         })
 
-        .controller('ApplicationDeployController',function($scope,$location,Engines,Applications){
+        .controller('ApplicationAddController',function($scope,$location,Engines,Applications){
             $scope.name="";
             $scope.filename="";
             $scope.owner="";
@@ -793,7 +793,7 @@ angular.module('shipyard.controllers', ['ngCookies'])
             };
         })
 
-        .controller('ApplicationDetailsController', function($scope, $location, $routeParams, flash, Application) {
+        .controller('ApplicationDetailsController', function($scope, $location, $routeParams, flash, Application,Container) {
             $scope.template = 'templates/application_details.html';
             $scope.showX = function(){
                 return function(d){
