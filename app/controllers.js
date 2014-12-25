@@ -793,8 +793,8 @@ angular.module('shipyard.controllers', ['ngCookies'])
             };
         })
 
-        .controller('ApplicationDetailsController', function($scope, $location, $routeParams, flash, Application,Container) {
-            $scope.template = 'templates/application_details.html';
+        .controller('ApplicationDetailsController', function($scope, $location, $routeParams, flash, Application) {
+             $scope.template = 'templates/application_details.html';
             $scope.showX = function(){
                 return function(d){
                     return d.key;
@@ -812,10 +812,10 @@ angular.module('shipyard.controllers', ['ngCookies'])
                 $('.basic.modal.startApplication')
                     .modal('show');
             };
+          
             $scope.removeApplication = function() {
                 Application.remove({id: $routeParams.id}).$promise.then(function() {
-                    // we must remove the modal or it will come back
-                    // the next time the modal is shown
+                 
                     $('.basic.modal').remove();
                     $location.path("/applications");
                 }, function(err) {
@@ -824,8 +824,7 @@ angular.module('shipyard.controllers', ['ngCookies'])
             };
             $scope.stopApplication = function() {
                 Application.control({id: $routeParams.id, action: 'stop'}).$promise.then(function() {
-                    // we must remove the modal or it will come back
-                    // the next time the modal is shown
+                
                     $('.basic.modal').remove();
                     $location.path("/applications/");
                 }, function(err) {
@@ -833,13 +832,12 @@ angular.module('shipyard.controllers', ['ngCookies'])
                 });
             };
             $scope.startApplication = function() {
-                Application.control({id: $routeParams.id, action: 'start'}).$promise.then(function() {
-                    // we must remove the modal or it will come back
-                    // the next time the modal is shown
+                Application.control({id: $routeParams.id, action: 'restart'}).$promise.then(function() {
+                
                     $('.basic.modal').remove();
                     $location.path("/applications/");
                 }, function(err) {
-                    flash.error = 'error starting application: ' + err.data;
+                    flash.error = 'error restarting application: ' + err.data;
                 });
             };
             $scope.showProgress = function() {
@@ -850,9 +848,12 @@ angular.module('shipyard.controllers', ['ngCookies'])
                 $('.ui.form').removeClass('hide');
                 $('.progress').addClass('hide');
             };
+           
+             Application.query({id: $routeParams.id}, function(data){
+                $scope.application = data;
+            });
+
         })
-
-
 
 $(function(){
     $('.message .close').on('click', function() {
