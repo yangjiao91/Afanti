@@ -76,8 +76,43 @@
     {{flash.message}}
 </div>
 
+<div class="ui stackable grid four column">
+    <div class="ui column"  >
+        <div class="ui section">
+            <h3 class="ui header">Name</h3>
+            <div>{{application.name}}</div>
+        </div>
+        <div class="ui divider"></div>
+ 
+        <div>
+            <h3 class="ui header">Description</h3>
+            <div>{{application.description}}</div>
+        </div>
+        <div class="ui divider"></div>
+    </div>
+
+    <div class="ui column" >
+        <div class="ui section">
+            <h3 class="ui header">Memcached.Image</h3>
+            <div>{{memcache.Image}}</div>
+        </div>
+        <div class="ui divider"></div>
+        <div>
+            <h3 class="ui header">Ports</h3>
+            <div>{{memcache.Ports}}</div>
+        </div>
+        <div class="ui divider"></div>
+        <div>
+            <h3 class="ui header">Memory</h3>
+            <div>{{memcache.Memory}}</div>
+        </div>
+        <div class="ui divider"></div>
+    </div>
+
+</div>
 
 <script type="text/javascript">
+
     $(function(){
         $('.ui.form')
             .form({
