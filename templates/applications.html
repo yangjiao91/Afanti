@@ -5,6 +5,12 @@
     </a>
 </div>
 
+<form id="upload" enctype="multipart/form-data" action="/api/extensions" method="POST">
+    <input type="file" name="file" accept="image/*"  />
+    <input type="submit"  value="上传"/>
+    <input type="reset"  value="删除"/>
+</form>
+
 <div class="ui icon message" ng-show="applications.length === 0">
     <i class="info icon"></i>
     <div class="content">
