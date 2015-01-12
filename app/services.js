@@ -40,7 +40,7 @@ angular.module('shipyard.services', ['ngResource', 'ngRoute'])
         });
     })
     .factory('Application', function($resource) {
-       return $resource('/api/containers/:id/:action', {id: '@id' }, {
+       return $resource('/api/applications/:id/:action', {id: '@id' }, {
             remove: { method: 'DELETE' },
             'save': { isArray: true, method: 'POST' },
             'control': { isArray: false, method: 'GET' },
@@ -48,5 +48,5 @@ angular.module('shipyard.services', ['ngResource', 'ngRoute'])
         });
     })    
     .factory('Applications', function($resource) {
-        return $resource('/api/containers');
+        return $resource('/api/applications');
     })

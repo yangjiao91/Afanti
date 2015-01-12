@@ -64,19 +64,12 @@
     </a>
 </div>
 
-<div class="ui icon buttons toolbar">
-    <a ng-click="showInspectApplicationDialog()" class="ui button mini blue">
-        <i class="exchange icon"></i>
-        Inspect
-    </a>
-</div>
-
 <div class="ui small message red" flash-alert="error" ng-show="flash.message" duration="0">
     <i class="close icon"></i>
     {{flash.message}}
 </div>
 
-<div class="ui stackable grid four column">
+<!-- <div class="ui stackable grid four column">
     <div class="ui column"  >
         <div class="ui section">
             <h3 class="ui header">Name</h3>
@@ -109,7 +102,56 @@
         <div class="ui divider"></div>
     </div>
 
-</div>
+</div> -->
+
+<table class="ui sortable table segment" >
+    <thead>
+        <tr>
+            <th >containerName</th>
+            <th >Image</th>
+            <th >Build</th>
+            <th >Command</th>
+            <th >Entrypoint</th>
+            <th >Environment</th>
+            <th >Ports</th>
+            <th >Volumes</th>
+            <th >Links</th>
+            <th >WorkingDir</th>
+            <th >Tty</th>
+            <th >Memory</th>
+            <th >CpuShares</th>
+            <th >Cpuset</th>
+            <th >Privileged</th>
+            <th >CapAdd</th>
+            <th >CapDrop</th>
+            <th >Devices</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="(key,a) in appContainer"  class="rowlink">
+            <td >{{key}}</td>   
+            <td >{{a.Image}}</td>
+            <td >{{a.Build}}</td>
+            <td >{{a.Command}}</td>
+            <td >{{a.Entrypoint}}</td>
+            <td >{{a.Environment}}</td>
+            <td >{{a.Ports}}</td>
+            <td >{{a.Volumes}}</td>
+            <td >{{a.Links}}</td>
+            <td >{{a.WorkingDir}}</td>
+            <td >{{a.Tty}}</td>
+            <td >{{a.Memory}}</td>
+            <td >{{a.CpuShares}}</td>
+            <td >{{a.Cpuset}}</td>
+            <td >{{a.Privileged}}</td>
+            <td >{{a.CapAdd}}</td>
+            <td >{{a.CapDrop}}</td>
+            <td >{{a.Devices}}</td>
+        </tr>
+    </tbody>
+</table>
+
+
 
 <script type="text/javascript">
 

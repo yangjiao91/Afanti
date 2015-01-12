@@ -1,15 +1,28 @@
-<div class="ui icon buttons toolbar">
+<!-- <div class="ui icon buttons toolbar">
     <a href="/#/applications/application_add" class="ui button mini green">
         <i class="add icon"></i>
         Add
     </a>
 </div>
+ -->
 
-<form id="upload" enctype="multipart/form-data" action="/api/extensions" method="POST">
-    <input type="file" name="file" accept="image/*"  />
-    <input type="submit"  value="上传"/>
-    <input type="reset"  value="删除"/>
+<div class="ui form" >
+ <form id="uplpad"  enctype="multipart/form-data" action="http://172.16.12.32:8080/api/applications" method="POST">
+
+<input type="text" id="input1" class="ui input" style="padding:0.35em 1em;width: 15%">
+
+<a class="ui button mini gray" onclick="myfile.click();">
+<i class="icon browser"></i>
+browser
+</a>
+
+<input type="file" id="myfile" name="uploadyml" onchange="input1.value=this.value" style="display:none">
+<input type="submit" class="ui button mini green" value="upload" />
+<input type="reset" class="ui button mini black"  value="reset"/>
+
 </form>
+</div>
+
 
 <div class="ui icon message" ng-show="applications.length === 0">
     <i class="info icon"></i>
@@ -26,12 +39,7 @@
         <tr>
             <th ng-class="sortedTableHeading1('id')" ng-click="selectSortColumn1('id')">ID</th>
             <th ng-class="sortedTableHeading1('name')" ng-click="selectSortColumn1('name')">Name</th>
-            <th ng-class="sortedTableHeading1('image.name')" ng-click="selectSortColumn1('image.name')">Image</th>
-            <th ng-class="sortedTableHeading1('engine.id')" ng-click="selectSortColumn1('engine.id')">Engine</th>
-            <th ng-class="sortedTableHeading1('image.cpus')" ng-click="selectSortColumn1('image.cpus')">CPUs</th>
-            <th ng-class="sortedTableHeading1('image.memory')" ng-click="selectSortColumn1('image.memory')">Memory</th>
-            <th ng-class="sortedTableHeading1('state')" ng-click="selectSortColumn1('state')">State</th>
-            <th ng-class="sortedTableHeading1('image.type')" ng-click="selectSortColumn1('image.type')">Type</th>
+            <th ng-class="sortedTableHeading1('description')" ng-click="selectSortColumn1('description')">Description</th>
         </tr>
     </thead>
     <tbody>
@@ -40,12 +48,7 @@
                 <a href="/#/applications/{{c.id}}">{{c.id|truncate}}</a>
             </td>
             <td>{{c.name}}</td>
-            <td>{{c.image.name}}</td>
-            <td>{{c.engine.id}}</td>
-            <td>{{c.image.cpus}}</td>
-            <td>{{c.image.memory|formatMemory}}</td>
-            <td>{{c.state}}</td>
-            <td>{{c.image.type}}</td>
+            <td>{{c.description}}</td>
         </tr>
     </tbody>
 </table>
