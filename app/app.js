@@ -31,10 +31,6 @@ angular.module('shipyard', [
                 templateUrl: 'templates/applications.html',
                 controller: 'ApplicationsController'
             });
-            $routeProvider.when('/applications/application_add', {
-                templateUrl: 'templates/application_add.html',
-                controller: 'ApplicationAddController'
-            });
             $routeProvider.when('/applications/:id', {
                 templateUrl: 'templates/application_details.html',
                 controller: 'ApplicationDetailsController'

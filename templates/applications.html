@@ -6,20 +6,28 @@
 </div>
  -->
 
-<div class="ui form" >
- <form id="uplpad"  enctype="multipart/form-data" action="http://172.16.12.32:8080/api/applications" method="POST">
+<div>
 
-<input type="text" id="input1" class="ui input" style="padding:0.35em 1em;width: 15%">
 
-<a class="ui button mini gray" onclick="myfile.click();">
-<i class="icon browser"></i>
-browser
-</a>
+ <form id="myForm" method="POST" enctype="multipart/form-data" ng-submit="uploadYML()">
 
-<input type="file" id="myfile" name="uploadyml" onchange="input1.value=this.value" style="display:none">
-<input type="submit" class="ui button mini green" value="upload" />
-<input type="reset" class="ui button mini black"  value="reset"/>
+    <input id="input1"  type="text" class="ui input"  style="padding:0.35em 1em;width: 15%">
+    <a class="ui button mini gray" onclick="jsonfile.click();">
+    <i class="icon browser"></i>
+    browser
+    </a>
+    <!-- <input type="file" id="jsonfile" name="uploadFile" > -->
+    <input type="file" id="jsonfile" onchange="input1.value=this.value" file-model="myFile" style="display:none" />
+    <!-- <button ng-click="uploadYML()">upload me</button> -->
+    <input type="submit" class="ui button mini green" value="upload" ng-disabled="myForm.$invalid" >
+<!-- <input type="reset" class="ui button mini black"  value="reset"/> -->
 
+</form>
+
+     <div class="ui small message red" ng-show="error">
+        <div class="header">Error</div>
+        <p>{{error}}</p>
+    </div>
 </form>
 </div>
 
@@ -52,3 +60,22 @@ browser
         </tr>
     </tbody>
 </table>
+
+ <script type="text/javascript">
+//     $(function(){
+//         $('.ui.form')
+//             .form({
+//                 jsonfile: {
+//                     identifier : 'jsonfile',
+//                     rules: [
+//                         {
+//                             type   : 'empty',
+//                             prompt : 'choose a file'
+//                         }
+//                     ]
+//                 }
+//             }, {
+//                 inline: 'true'
+//             });
+//     });
+ </script>

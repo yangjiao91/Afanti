@@ -591,6 +591,7 @@ angular.module('shipyard.controllers', ['ngCookies'])
         })
 
         .controller('ApplicationsController' , function($scope,$location,Applications){
+            console.log(arguments);
             $scope.orderByField = 'id';
             $scope.reverseSort = false;
 
@@ -615,183 +616,23 @@ angular.module('shipyard.controllers', ['ngCookies'])
                 }
             }
 
+            $scope.uploadYML = function(){
+                var file = $scope.myFile;
+                console.log(file);
+                Applications.save({}, file).$promise.then(function(c){
+                    $location.path("/applications/");
+                }, function(err){
+                    $scope.error = err.data;
+                    return false;
+                });
+
+            }
+
             $scope.template = 'templates/applications.html';
             Applications.query(function(data){
                 // data = [{"id":"9ee44bc988eebf2f7c12a585b3ae7542a76f6bb1a4aa6f511693d0db26678292","name":"/dd","image":{"name":"dd3d3d029bb2","cpus":0.1,"memory":256,"environment":{"VERSION":"2.25"},"hostname":"dd","domain":"dd","type":"service","labels":[""],"volumes":["dd"],"restart_policy":{"name":"no"},"network_mode":"bridge"},"engine":{"id":"shipyard","addr":"http:\\172.16.12.32:2375","cpus":1,"memory":1024,"labels":["yj"]},"state":"stopped"},{"id":"f98946c848cd2fc4700e5432fd8b73db8a23d92070dda186b70493f84dfe65c0","name":"/shipyard-rethinkdb","image":{"name":"dreg:5000/funvalley_dockerhub_mirror/shipyard_rethinkdb:latest","entrypoint":["/usr/bin/rethinkdb"],"hostname":"f98946c848cd","bind_ports":[{"proto":"tcp","host_ip":"0.0.0.0","port":28015,"container_port":28015},{"proto":"tcp","host_ip":"0.0.0.0","port":49171,"container_port":29015},{"proto":"tcp","host_ip":"0.0.0.0","port":49172,"container_port":8080}],"volumes":["/data"],"restart_policy":{},"publish":true,"network_mode":"bridge"},"engine":{"id":"shipyard","addr":"http://172.16.12.32:2375","cpus":1,"memory":1024,"labels":["yj"]},"state":"running","ports":[{"proto":"tcp","host_ip":"0.0.0.0","port":28015,"container_port":28015},{"proto":"tcp","host_ip":"0.0.0.0","port":49171,"container_port":29015},{"proto":"tcp","host_ip":"0.0.0.0","port":49172,"container_port":8080}]},{"id":"861aabddeb9077bbb73c07c71c563ff576657a45372116722b455685c9559eab","name":"/shipyard-rethinkdb-data","image":{"name":"dreg:5000/funvalley_dockerhub_mirror/shipyard_rethinkdb:latest","entrypoint":["/bin/bash"],"hostname":"861aabddeb90","volumes":["/data"],"restart_policy":{},"network_mode":"bridge"},"engine":{"id":"shipyard","addr":"http://172.16.12.32:2375","cpus":1,"memory":1024,"labels":["yj"]},"state":"running"}] ;
                 $scope.applications = data;
             });
-        })
-
-        .controller('ApplicationAddController',function($scope,$location,Engines,Applications){
-            $scope.name="";
-            $scope.filename="";
-            $scope.owner="";
-            $scope.domain="";
-            $scope.label="";
-            $scope.examples="";
-            
-            $scope.selectType = function(type) {
-                $scope.selectedType = type;
-                $(".ui.dropdown").dropdown('hide');
-            };
-            $scope.selectedNetworkMode = 'bridge';
-            $scope.networkModes = networkModes;
-            $scope.selectNetworkMode = function(mode) {
-                $scope.selectedNetworkMode = mode;
-                if (mode === 'container') {
-                    $scope.showNetworkModeContainer = true;
-                } else {
-                    $scope.showNetworkModeContainer = false;
-                }
-                $(".ui.dropdown").dropdown('hide');
-            };
-            $scope.selectedRestartPolicy = 'no';
-            $scope.restartPolicies = restartPolicies;
-            $scope.selectRestartPolicy = function(policy) {
-                $scope.selectedRestartPolicy = policy;
-                if (policy == 'on-failure') {
-                    $scope.showMaxRestarts = true;
-                } else {
-                    $scope.showMaxRestarts = false;
-                }
-                $(".ui.dropdown").dropdown('hide');
-            }
-            var labels = [];
-            Engines.query(function(engines){
-                angular.forEach(engines, function(e) {
-                    angular.forEach(e.engine.labels, function(l){
-                        if (labels.indexOf(l) == -1) {
-                            this.push(l);
-                        }
-                    }, labels);
-                });
-                $scope.labels = labels;
-            });
-            $scope.addPortDefinition = addPortDefinition;
-            $scope.showLoader = function() {
-                $(".ui.loader").removeClass("disabled");
-                $(".ui.active").addClass("dimmer");
-            };
-            $scope.hideLoader = function() {
-                $(".ui.loader").addClass("disabled");
-                $(".ui.active").removeClass("dimmer");
-            };
-            $scope.deploy = function() {
-                $scope.showLoader();
-                var valid = $(".ui.form").form('validate form');
-                if (!valid) {
-                    $scope.hideLoader();
-                    return false;
-                }
-                var selectedLabels = [];
-                $(".ui.checkbox.engine-label").children(":checked").each(function(i, sel){
-                    // HACK: use the label text to set the value
-                    selectedLabels.push($(sel).next().text());
-                });
-                // format environment
-                var envParts = $scope.environment.match(/(?:['"].+?['"])|\S+/g);
-                var environment = {};
-                if (envParts != null) {
-                    for (var i=0; i<envParts.length; i++) {
-                        var env = envParts[i].split(/=(.+)?/)
-                        environment[env[0]] = env[1];
-                    }
-                }
-                if ($scope.args != null) {
-                    var args = $scope.args.split(" ");
-                }
-                // network mode
-                var networkMode = $scope.selectedNetworkMode;
-                if ($scope.selectedNetworkMode == 'container') {
-                    var containerName = $scope.networkModeContainerName;
-                    networkMode = 'container:' + containerName;
-                    if (containerName == undefined || containerName == "") {
-                        $("div#networkMode").addClass("error");
-                        $scope.error = "you must specify a container name for the container network mode";
-                        $scope.hideLoader();
-                        valid = false;
-                        return false;
-                    }
-                }
-                // links
-                var links = {};
-                if ($scope.links != null) {
-                    var linkParts = $scope.links.split(" ");
-                    if (linkParts != "") {
-                        for (var i=0; i<linkParts.length; i++) {
-                            var l = linkParts[i].split(":");
-                            links[l[0]] = l[1];
-                        }
-                    }
-                }
-                // volumes
-                var volumes = [];
-                if ($scope.volumes != null) {
-                    var volParts = $scope.volumes.split(" ");
-                    if (volParts != "") {
-                        for (var i=0; i<volParts.length; i++) {
-                            volumes.push(volParts[i]);
-                        }
-                    }
-                }
-                // ports
-                var ports = [];
-                $(".ui.segment.ports").children("div.four.fields").each(function(i, el){
-                    var portSpecs = $(el).children("div").children("div");
-                    var portDef = {};
-                    var proto = $(portSpecs[0]).children(":input")[0].value;
-                    var ip = $(portSpecs[1]).children(":input")[0].value;
-                    var port = $(portSpecs[2]).children(":input")[0].value;
-                    var container_port = $(portSpecs[3]).children(":input")[0].value;
-                    portDef["proto"] = proto;
-                    portDef["host_ip"] = ip || null;
-                    portDef["port"] = parseInt(port);
-                    portDef["container_port"] = parseInt(container_port) || null;
-                    ports.push(portDef);
-                    if (portDef["proto"] == "" || portDef["container_port"] == null) {
-                        $(portSpecs[0]).addClass("error");
-                        $(portSpecs[3]).addClass("error");
-                        $scope.error = "you must specify a protocol and container port for port bindings";
-                        $scope.hideLoader();
-                        valid = false;
-                        return false;
-                    }
-                });
-                var restartPolicy = {
-                    name: $scope.selectedRestartPolicy,
-                }
-                var maxRestarts = parseInt($scope.maxRestarts);
-                if(maxRestarts > 0) {
-                    restartPolicy.maximum_retry = maxRestarts;
-                }
-                var params = {
-                    name: $scope.name,
-                    container_name: $scope.containerName,
-                    cpus: parseFloat($scope.cpus),
-                    memory: parseFloat($scope.memory),
-                    environment: environment,
-                    hostname: $scope.hostname,
-                    domain: $scope.domain,
-                    type: $scope.selectedType,
-                    network_mode: networkMode,
-                    args: args,
-                    links: links,
-                    volumes: volumes,
-                    bind_ports: ports,
-                    labels: selectedLabels,
-                    publish: $scope.publish,
-                    restart_policy: restartPolicy, 
-                };
-                if (valid) {
-                    Container.save({count: $scope.count, pull: $scope.pull}, params).$promise.then(
-                        function(c){$location.path("/containers");}, 
-                        function(err){
-                        $scope.hideLoader();
-                        $scope.error = err.data;
-                        return false;
-                    });
-                }
-            };
         })
 
         .controller('ApplicationDetailsController', function($scope, $location, $routeParams, flash, Application) {
