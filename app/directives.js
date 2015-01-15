@@ -37,7 +37,7 @@ angular.module('shipyard.directives', [])
             restrict: 'A',
             link: function(scope, element, attrs) {
                 var model = $parse(attrs.fileModel);
-                var modelSetter = model.assign;
+                var modelSetter = model.assign;  //assign属性可以用来在给定的上下文中改变这个表达式的值。 
                 
                 element.bind('change', function(){
                     scope.$apply(function(){
